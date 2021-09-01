@@ -55,10 +55,7 @@ export const Details = styled.div`
 `;
 
 export const BackButton = styled(Link)`
-  border: 0;
-  outline: 0;
   background: transparent;
-
   align-self: flex-start;
   margin  : 30px 0 0 30px;
 `;
@@ -128,8 +125,6 @@ export const PageActions = styled.div`
   justify-content: space-between;
 
   button{
-    outline: 0;
-    border: 0;
     background: #222;
     color: #FFF;
     padding: 5px 10px;
@@ -138,6 +133,21 @@ export const PageActions = styled.div`
     &:disabled{
       cursor: not-allowed;
       opacity: 0.5;
+    }
+  }
+`;
+
+export const FilterList = styled.div`
+  margin: 15px 0;
+
+  button{
+    padding: 8px;
+    border-radius: 4px;
+    margin: 0 3px;
+
+    &:nth-child(${props => props.active + 1}){
+      background: #0071db;
+      color: #FFF;
     }
   }
 `;

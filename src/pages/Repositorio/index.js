@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Container, RepositoryContainer, Owner, Loading, Details, BackButton, IssuesList, PageActions } from './styles';
+import {Container, RepositoryContainer, Owner, Loading, Details, BackButton, IssuesList, PageActions, FilterList } from './styles';
 import { FaArrowLeft } from 'react-icons/fa';
 import UserRepository from '../../repositories/UserRepository';
 
@@ -9,6 +9,12 @@ export default function Repositorio({match}){
   const [issues, setIssues] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
+  const [filters, ] = useState([
+    {state: 'all', label: 'Todas', active: true},
+    {state: 'open', label: 'Abertas', active: false},
+    {state: 'closed', label: 'Fechadas', active: false}
+  ]);
+  const [filterIndex, setFilterIndex] = useState(0);
 
   useEffect(() => {
     async function load() {
@@ -18,7 +24,7 @@ export default function Repositorio({match}){
         UserRepository.get(nomeRepo),
         UserRepository.get(`${nomeRepo}/issues`, {
           params: {
-            state: 'open',
+            state: filters.find(f => f.active).state,
             per_page: 5
           }
         }),
@@ -31,7 +37,8 @@ export default function Repositorio({match}){
     }
 
     load();
-  }, [match.params.repositorio]);
+
+  }, [filters, match.params.repositorio]);
 
   useEffect(() => {
     async function loadIssue(){
@@ -39,7 +46,7 @@ export default function Repositorio({match}){
 
       const response = await UserRepository.get(`${nomeRepo}/issues`, {
         params: {
-          state: 'open',
+          state: filters[filterIndex].state,
           page,
           per_page: 5
         }
@@ -50,7 +57,11 @@ export default function Repositorio({match}){
     
     loadIssue();
 
-  }, [match.params.repositorio, page])
+  }, [filterIndex, filters, match.params.repositorio, page])
+
+  function handleFilter(index) {
+    setFilterIndex(index);
+  }
 
   function handlePage(action) {
     setPage((action === 'back') ? page - 1 : page + 1);
@@ -66,9 +77,11 @@ export default function Repositorio({match}){
 
   return(
     <Container>
+
       <BackButton to="/">
         <FaArrowLeft color="#FFF" size={35} />
       </BackButton>
+
       <RepositoryContainer>
         <Owner>
           <img 
@@ -85,6 +98,19 @@ export default function Repositorio({match}){
           </Details>
           <div className="clear"></div>
         </Owner>
+
+        <FilterList active={filterIndex}>
+          {filters.map((filter, index) => (
+            <button
+              type="button"
+              key={filter.label}
+              onClick={() => handleFilter(index)}
+            >
+              {filter.label}
+            </button>
+          ))}
+        </FilterList>
+
         <IssuesList>
           {issues.map(issue => (
             <li key={String(issue.id)}>
@@ -106,6 +132,7 @@ export default function Repositorio({match}){
             </li>
           ))}
         </IssuesList>
+
         <PageActions>
           <button 
             type="button" 
@@ -119,7 +146,9 @@ export default function Repositorio({match}){
             Próxima
           </button>
         </PageActions>
+
       </RepositoryContainer>
+
     </Container>
   )
 }

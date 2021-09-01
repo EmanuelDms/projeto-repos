@@ -26,6 +26,8 @@ body, input, button {
 
 button{
   cursor: pointer;
+  outline: 0;
+  border: 0;
 }
 
 .clear{
