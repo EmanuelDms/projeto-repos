@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Container, RepositoryContainer, Owner, Loading, Details, BackButton } from './styles';
+import {Container, RepositoryContainer, Owner, Loading, Details, BackButton, IssuesList } from './styles';
 import { FaArrowLeft } from 'react-icons/fa';
 import UserRepository from '../../repositories/UserRepository';
 
@@ -53,11 +53,35 @@ export default function Repositorio({match}){
           />
 
           <Details>
-            <h1>{repositorio.name}</h1>
+            <h1>{
+            // First letter to Upper Case
+            repositorio.name.toUpperCase()[0] + (repositorio.name.substring(1, repositorio.name.length))
+            }</h1>
             <p>{repositorio.description}</p>
           </Details>
           <div className="clear"></div>
         </Owner>
+        <IssuesList>
+          {issues.map(issue => (
+            <li key={String(issue.id)}>
+              <img src={issue.user.avatar_url} alt={issue.user.login} />
+
+              <div>
+                <strong>
+                  <a href={issue.html_url}>{issue.title}</a>
+                
+                  {issue.labels.map(label => (
+                    <span key={String(label.id)}>
+                      {label.name}
+                    </span>
+                  ))}
+                </strong>
+                <p>{issue.user.login}</p>
+              </div>
+
+            </li>
+          ))}
+        </IssuesList>
       </RepositoryContainer>
     </Container>
   )

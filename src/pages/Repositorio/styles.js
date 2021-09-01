@@ -64,3 +64,61 @@ export const BackButton = styled(Link)`
   align-self: flex-start;
   margin  : 30px 0 0 30px;
 `;
+
+export const IssuesList = styled.ul`
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: 1px solid #eee;
+  list-style: none;
+
+  li{
+    display: flex;
+    padding: 15px 10px;
+
+    & + li {
+      margin-top: 12px;
+    }
+
+    img{
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid #0D2636;
+    }
+    
+    div{
+      flex: 1;
+      margin-left: 10px;
+
+      strong{
+        font-size: 15px;
+
+        a{
+          text-decoration: underline;
+          color: #222;
+          transform: 0.3s;
+
+          &:hover{
+            color: #0071db;
+          }
+        }
+
+        span{
+          background: #222;
+          color: #FFF;
+          border-radius: 4px;
+          font-size: 12px;
+          font-weight: 600;
+          padding: 4px 7px;
+        }
+      }
+
+      p{
+        font-style: italic;
+        font-size: 12px;
+        color: #000;
+      }
+
+    }
+  }
+`;
