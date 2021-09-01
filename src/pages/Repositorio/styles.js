@@ -38,7 +38,9 @@ export const Owner = styled.header`
     width: 150px;
     border-radius: 20%;
   }
+`;
 
+export const Details = styled.div`
   h1{
     font-size: 30px;
     color: #0D2636;
@@ -50,10 +52,6 @@ export const Owner = styled.header`
     text-align: left;
     line-height: 1.4;
   }
-`;
-
-export const Details = styled.div`
-
 `;
 
 export const BackButton = styled(Link)`
@@ -119,6 +117,27 @@ export const IssuesList = styled.ul`
         color: #000;
       }
 
+    }
+  }
+`;
+
+export const PageActions = styled.div`
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  button{
+    outline: 0;
+    border: 0;
+    background: #222;
+    color: #FFF;
+    padding: 5px 10px;
+    border-radius: 4px;
+
+    &:disabled{
+      cursor: not-allowed;
+      opacity: 0.5;
     }
   }
 `;
